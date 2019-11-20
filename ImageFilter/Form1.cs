@@ -92,5 +92,20 @@ namespace ImageFilter
                 e.Graphics.DrawImage(processedBitmap, 0, 0);
             }
         }
+
+        private void loadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog choofdlog = new OpenFileDialog();
+            choofdlog.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.jfif, *.png) | *.jpg; *.jpeg; *.jpe; *.jfif; *.png";
+            choofdlog.FilterIndex = 1;
+            choofdlog.Multiselect = false;
+
+            if (choofdlog.ShowDialog() == DialogResult.OK)
+            {
+                ImageBitmap = new Bitmap(choofdlog.FileName);
+                InitializeImage();
+                Image.Invalidate();
+            }
+        }
     }
 }
