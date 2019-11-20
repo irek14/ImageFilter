@@ -147,7 +147,7 @@ namespace ImageFilter
                 current_point = point;
             }
 
-            if (current_mode == BrushMode.DrawPolygon && e.Button == MouseButtons.Left)
+            else if (current_mode == BrushMode.DrawPolygon && e.Button == MouseButtons.Left)
             {
                 previous_point = new Point(e.Location.X, e.Location.Y);
                 current_line = ((Point)current_point, (Point)previous_point);
@@ -167,16 +167,34 @@ namespace ImageFilter
 
         private void AddPolygonButton_Click(object sender, EventArgs e)
         {
+            if(!CheckIfDrawEnd())
+            {
+                MessageBox.Show("Żeby zmienić tryb należy najpierw dokończyć rysowanie", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             current_mode = BrushMode.FirstPoint;
         }
 
         private void CircleBrushButton_Click(object sender, EventArgs e)
         {
+            if (!CheckIfDrawEnd())
+            {
+                MessageBox.Show("Żeby zmienić tryb należy najpierw dokończyć rysowanie", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             current_mode = BrushMode.Circle;
         }
 
         private void DeletePolygonButton_Click(object sender, EventArgs e)
         {
+            if (!CheckIfDrawEnd())
+            {
+                MessageBox.Show("Żeby zmienić tryb należy najpierw dokończyć rysowanie", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             current_mode = BrushMode.DeletePolygon;
         }
 
@@ -188,6 +206,16 @@ namespace ImageFilter
                 CreateSegment(next_point);
                 drawCurrentLine = false;
             }
+            else if (current_mode == BrushMode.DeletePolygon)
+            {
+                (Polygon toDelete, (Point, Point) segment) = GetPolygonWithPointOnSegment(new Point(e.Location.X, e.Location.Y));
+                if (toDelete != null)
+                {
+                    polygons.Remove(toDelete);
+                }
+            }
+
+            Image.Invalidate();
         }
 
     }

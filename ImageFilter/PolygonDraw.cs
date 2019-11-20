@@ -94,5 +94,20 @@ namespace ImageFilter
 
             return false;
         }
+
+        private bool CheckIfDrawEnd()
+        {
+            if (polygons.Count == 0)
+                return true;
+
+            Polygon last = polygons.Last();
+
+            if(last.start_point == last.segments.Last().p2)
+            {
+                return true;
+            }
+
+            return false;
+        }
     }
 }
