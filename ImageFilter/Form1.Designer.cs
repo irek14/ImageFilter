@@ -412,6 +412,8 @@
             this.Image.TabIndex = 0;
             this.Image.TabStop = false;
             this.Image.Paint += new System.Windows.Forms.PaintEventHandler(this.Image_Paint);
+            this.Image.MouseLeave += new System.EventHandler(this.Image_MouseLeave);
+            this.Image.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Image_MouseMove);
             // 
             // MainForm
             // 

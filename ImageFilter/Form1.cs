@@ -20,6 +20,12 @@ namespace ImageFilter
         Color[,] newPhoto;
 
         Bitmap ImageBitmap = new Bitmap(Resources.Teppan);
+        Point mouse_point = new Point(-1, -1);
+
+        BrushMode current_mode = BrushMode.Circle;
+        int radius = 60;
+
+        enum BrushMode { Circle, AddPolygon, DeletePolygon };
 
         public MainForm()
         {
@@ -90,6 +96,8 @@ namespace ImageFilter
                 }
 
                 e.Graphics.DrawImage(processedBitmap, 0, 0);
+                if(mouse_point.X != -1)
+                    e.Graphics.DrawEllipse(new Pen(Brushes.Black), mouse_point.X, mouse_point.Y, radius, radius);
             }
         }
 
@@ -106,6 +114,22 @@ namespace ImageFilter
                 InitializeImage();
                 Image.Invalidate();
             }
+        }
+
+        private void Image_MouseMove(object sender, MouseEventArgs e)
+        {
+            mouse_point = new Point(e.X-radius/2, e.Y-radius/2);
+            Cursor = Cursors.Hand;
+
+            Image.Invalidate();
+        }
+
+        private void Image_MouseLeave(object sender, EventArgs e)
+        {
+            Cursor = Cursors.Default;
+            mouse_point = new Point(-1, -1);
+
+            Image.Invalidate();
         }
     }
 }
