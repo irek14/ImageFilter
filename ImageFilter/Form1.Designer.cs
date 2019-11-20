@@ -341,6 +341,7 @@
             this.DeletePolygonButton.TabIndex = 3;
             this.DeletePolygonButton.Text = "Usuń wielokąt";
             this.DeletePolygonButton.UseVisualStyleBackColor = true;
+            this.DeletePolygonButton.Click += new System.EventHandler(this.DeletePolygonButton_Click);
             // 
             // CircleBrushButton
             // 
@@ -350,6 +351,7 @@
             this.CircleBrushButton.TabIndex = 2;
             this.CircleBrushButton.Text = "Pędzel kołowy";
             this.CircleBrushButton.UseVisualStyleBackColor = true;
+            this.CircleBrushButton.Click += new System.EventHandler(this.CircleBrushButton_Click);
             // 
             // AddPolygonButton
             // 
@@ -359,6 +361,7 @@
             this.AddPolygonButton.TabIndex = 1;
             this.AddPolygonButton.Text = "Dodaj wielokąt";
             this.AddPolygonButton.UseVisualStyleBackColor = true;
+            this.AddPolygonButton.Click += new System.EventHandler(this.AddPolygonButton_Click);
             // 
             // ModeLabel
             // 
@@ -414,6 +417,7 @@
             this.Image.Paint += new System.Windows.Forms.PaintEventHandler(this.Image_Paint);
             this.Image.MouseLeave += new System.EventHandler(this.Image_MouseLeave);
             this.Image.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Image_MouseMove);
+            this.Image.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Image_MouseUp);
             // 
             // MainForm
             // 

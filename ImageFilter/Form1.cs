@@ -21,11 +21,17 @@ namespace ImageFilter
 
         Bitmap ImageBitmap = new Bitmap(Resources.Teppan);
         Point mouse_point = new Point(-1, -1);
+        List<Polygon> polygons = new List<Polygon>();
+        bool drawCurrentLine = false;
+        Polygon current_polygon;
+        (Point, Point) current_line;
+        Point? current_point = null;
+        Point? previous_point = null;
 
         BrushMode current_mode = BrushMode.Circle;
         int radius = 60;
 
-        enum BrushMode { Circle, AddPolygon, DeletePolygon };
+        enum BrushMode { Circle, FirstPoint, DrawPolygon, DeletePolygon };
 
         public MainForm()
         {
@@ -96,7 +102,17 @@ namespace ImageFilter
                 }
 
                 e.Graphics.DrawImage(processedBitmap, 0, 0);
-                if(mouse_point.X != -1)
+
+                if (drawCurrentLine)
+                    e.Graphics.DrawLine(new Pen(Brushes.Black), current_line.Item1, current_line.Item2);
+                foreach (Polygon polygon in polygons)
+                {
+                    PaintAllPoints(Brushes.Black, polygon, e.Graphics);
+                    foreach (var segment in polygon.segments)
+                        e.Graphics.DrawLine(new Pen(Brushes.Black), segment.p1, segment.p2);
+                }
+
+                if (mouse_point.X != -1 && current_mode == BrushMode.Circle)
                     e.Graphics.DrawEllipse(new Pen(Brushes.Black), mouse_point.X, mouse_point.Y, radius, radius);
             }
         }
@@ -121,6 +137,23 @@ namespace ImageFilter
             mouse_point = new Point(e.X-radius/2, e.Y-radius/2);
             Cursor = Cursors.Hand;
 
+            if (current_mode == BrushMode.FirstPoint && e.Button == MouseButtons.Left)
+            {
+                current_mode = BrushMode.DrawPolygon;
+                Point point = new Point(e.Location.X, e.Location.Y);
+
+                current_polygon = new Polygon(point);
+                polygons.Add(current_polygon);
+                current_point = point;
+            }
+
+            if (current_mode == BrushMode.DrawPolygon && e.Button == MouseButtons.Left)
+            {
+                previous_point = new Point(e.Location.X, e.Location.Y);
+                current_line = ((Point)current_point, (Point)previous_point);
+                drawCurrentLine = true;
+            }
+
             Image.Invalidate();
         }
 
@@ -131,5 +164,31 @@ namespace ImageFilter
 
             Image.Invalidate();
         }
+
+        private void AddPolygonButton_Click(object sender, EventArgs e)
+        {
+            current_mode = BrushMode.FirstPoint;
+        }
+
+        private void CircleBrushButton_Click(object sender, EventArgs e)
+        {
+            current_mode = BrushMode.Circle;
+        }
+
+        private void DeletePolygonButton_Click(object sender, EventArgs e)
+        {
+            current_mode = BrushMode.DeletePolygon;
+        }
+
+        private void Image_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (current_mode == BrushMode.DrawPolygon)
+            {
+                Point next_point = new Point(e.Location.X, e.Location.Y);
+                CreateSegment(next_point);
+                drawCurrentLine = false;
+            }
+        }
+
     }
 }
