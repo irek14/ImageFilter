@@ -34,8 +34,11 @@
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MainTable = new System.Windows.Forms.TableLayoutPanel();
+            this.Image = new System.Windows.Forms.PictureBox();
             this.ChartTable = new System.Windows.Forms.TableLayoutPanel();
             this.BChartPanel = new System.Windows.Forms.Panel();
             this.BLabel = new System.Windows.Forms.Label();
@@ -47,7 +50,6 @@
             this.RChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.RLabel = new System.Windows.Forms.Label();
             this.MenuPanel = new System.Windows.Forms.Panel();
-            this.MyFunctionChart = new LiveCharts.WinForms.CartesianChart();
             this.FilterGroupBox = new System.Windows.Forms.GroupBox();
             this.MyFunctionRadio = new System.Windows.Forms.RadioButton();
             this.GammaRadio = new System.Windows.Forms.RadioButton();
@@ -64,8 +66,9 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Image = new System.Windows.Forms.PictureBox();
+            this.MyFunctionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.MainTable.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Image)).BeginInit();
             this.ChartTable.SuspendLayout();
             this.BChartPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.BChart)).BeginInit();
@@ -76,7 +79,7 @@
             this.MenuPanel.SuspendLayout();
             this.FilterGroupBox.SuspendLayout();
             this.MainMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Image)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MyFunctionChart)).BeginInit();
             this.SuspendLayout();
             // 
             // MainTable
@@ -96,6 +99,20 @@
             this.MainTable.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 737F));
             this.MainTable.Size = new System.Drawing.Size(1184, 737);
             this.MainTable.TabIndex = 0;
+            // 
+            // Image
+            // 
+            this.Image.BackColor = System.Drawing.Color.White;
+            this.Image.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Image.Location = new System.Drawing.Point(3, 3);
+            this.Image.Name = "Image";
+            this.Image.Size = new System.Drawing.Size(467, 731);
+            this.Image.TabIndex = 0;
+            this.Image.TabStop = false;
+            this.Image.Paint += new System.Windows.Forms.PaintEventHandler(this.Image_Paint);
+            this.Image.MouseLeave += new System.EventHandler(this.Image_MouseLeave);
+            this.Image.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Image_MouseMove);
+            this.Image.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Image_MouseUp);
             // 
             // ChartTable
             // 
@@ -237,14 +254,6 @@
             this.MenuPanel.Name = "MenuPanel";
             this.MenuPanel.Size = new System.Drawing.Size(349, 731);
             this.MenuPanel.TabIndex = 2;
-            // 
-            // MyFunctionChart
-            // 
-            this.MyFunctionChart.Location = new System.Drawing.Point(3, 476);
-            this.MyFunctionChart.Name = "MyFunctionChart";
-            this.MyFunctionChart.Size = new System.Drawing.Size(313, 252);
-            this.MyFunctionChart.TabIndex = 6;
-            this.MyFunctionChart.Text = "cartesianChart1";
             // 
             // FilterGroupBox
             // 
@@ -395,7 +404,7 @@
             // loadToolStripMenuItem
             // 
             this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
             this.loadToolStripMenuItem.Text = "Load";
             this.loadToolStripMenuItem.Click += new System.EventHandler(this.loadToolStripMenuItem_Click);
             // 
@@ -405,19 +414,21 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
-            // Image
+            // MyFunctionChart
             // 
-            this.Image.BackColor = System.Drawing.Color.White;
-            this.Image.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Image.Location = new System.Drawing.Point(3, 3);
-            this.Image.Name = "Image";
-            this.Image.Size = new System.Drawing.Size(467, 731);
-            this.Image.TabIndex = 0;
-            this.Image.TabStop = false;
-            this.Image.Paint += new System.Windows.Forms.PaintEventHandler(this.Image_Paint);
-            this.Image.MouseLeave += new System.EventHandler(this.Image_MouseLeave);
-            this.Image.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Image_MouseMove);
-            this.Image.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Image_MouseUp);
+            chartArea4.Name = "ChartArea1";
+            this.MyFunctionChart.ChartAreas.Add(chartArea4);
+            this.MyFunctionChart.Location = new System.Drawing.Point(3, 452);
+            this.MyFunctionChart.Name = "MyFunctionChart";
+            this.MyFunctionChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
+            this.MyFunctionChart.PaletteCustomColors = new System.Drawing.Color[] {
+        System.Drawing.Color.Black};
+            series4.ChartArea = "ChartArea1";
+            series4.Name = "Series1";
+            this.MyFunctionChart.Series.Add(series4);
+            this.MyFunctionChart.Size = new System.Drawing.Size(342, 276);
+            this.MyFunctionChart.TabIndex = 6;
+            this.MyFunctionChart.Text = "chart1";
             // 
             // MainForm
             // 
@@ -431,6 +442,7 @@
             this.Name = "MainForm";
             this.Text = "Image Filter";
             this.MainTable.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.Image)).EndInit();
             this.ChartTable.ResumeLayout(false);
             this.BChartPanel.ResumeLayout(false);
             this.BChartPanel.PerformLayout();
@@ -447,7 +459,7 @@
             this.FilterGroupBox.PerformLayout();
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Image)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MyFunctionChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -484,7 +496,7 @@
         private System.Windows.Forms.RadioButton BrightnessRadio;
         private System.Windows.Forms.RadioButton NegationRadio;
         private System.Windows.Forms.RadioButton NoFilterRadio;
-        private LiveCharts.WinForms.CartesianChart MyFunctionChart;
+        private System.Windows.Forms.DataVisualization.Charting.Chart MyFunctionChart;
     }
 }
 

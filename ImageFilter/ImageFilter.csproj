@@ -65,6 +65,9 @@
     <Compile Include="DeletePolygon.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="FilterFunctions.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
