@@ -1,4 +1,6 @@
 ﻿using ImageFilter.Properties;
+using LiveCharts;
+using LiveCharts.Wpf;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.DataVisualization.Charting;
 
 namespace ImageFilter
 {
@@ -41,6 +44,8 @@ namespace ImageFilter
             Image.Invalidate();
         }
 
+
+
         private void InitializeImage()
         {
             photo = new Color[PhotoWidth, PhotoHeight];
@@ -52,8 +57,9 @@ namespace ImageFilter
                 {
                     if (i < ImageBitmap.Width && j < ImageBitmap.Height)
                     {
-                        photo[i, j] = ImageBitmap.GetPixel(i, j);
-                        newPhoto[i, j] = ImageBitmap.GetPixel(i, j);
+                        Color pixel = ImageBitmap.GetPixel(i, j);
+                        photo[i, j] = pixel;
+                        newPhoto[i, j] = pixel;
                     }
                     else
                     {
@@ -61,6 +67,61 @@ namespace ImageFilter
                         newPhoto[i, j] = Color.White;
                     }                        
                 }
+            }
+        }
+
+        private void PrepareCharts()
+        {
+            int[] R = new int[256];
+            int[] G = new int[256];
+            int[] B = new int[256];
+
+            RChart.Series.Clear();
+            GChart.Series.Clear();
+            BChart.Series.Clear();
+
+            RChart.ChartAreas.Clear();
+            GChart.ChartAreas.Clear();
+            BChart.ChartAreas.Clear();
+
+            for (int i=0; i<ImageBitmap.Width && i<PhotoWidth; i++)
+            {
+                for(int j=0; j<ImageBitmap.Width && j<PhotoHeight; j++)
+                {
+                    R[newPhoto[i, j].R]++;
+                    G[newPhoto[i, j].G]++;
+                    B[newPhoto[i, j].B]++;
+                }
+            }
+
+            Chart Chart0 = new Chart();
+            ChartArea ChartArea0 = new ChartArea("Color R");
+            ChartArea ChartArea1 = new ChartArea("Color G");
+            ChartArea ChartArea2 = new ChartArea("Color B");
+
+            RChart.ChartAreas.Add(ChartArea0);
+            ChartArea0.AxisX.Minimum = 0;
+            ChartArea0.AxisY.Maximum = R.Max() + 50;
+            GChart.ChartAreas.Add(ChartArea1);
+            ChartArea1.AxisX.Minimum = 0;
+            ChartArea1.AxisY.Maximum = R.Max() + 50;
+            BChart.ChartAreas.Add(ChartArea2);
+            ChartArea2.AxisX.Minimum = 0;
+            ChartArea2.AxisY.Maximum = R.Max() + 50;
+
+            RChart.Series.Add("Seria 1");
+            GChart.Series.Add("Seria 1");
+            BChart.Series.Add("Seria 1");
+
+            for (int i = 0; i < 256; i++)
+            {
+                RChart.Series["Seria 1"].Points.AddXY(i, R[i]);
+                GChart.Series["Seria 1"].Points.AddXY(i, G[i]);
+                BChart.Series["Seria 1"].Points.AddXY(i, B[i]);
+
+                RChart.Series["Seria 1"].ChartArea = "Color R";
+                GChart.Series["Seria 1"].ChartArea = "Color G";
+                BChart.Series["Seria 1"].ChartArea = "Color B";
             }
         }
 
@@ -114,6 +175,8 @@ namespace ImageFilter
 
                 if (mouse_point.X != -1 && current_mode == BrushMode.Circle)
                     e.Graphics.DrawEllipse(new Pen(Brushes.Black), mouse_point.X, mouse_point.Y, radius, radius);
+
+                PrepareCharts();
             }
         }
 
