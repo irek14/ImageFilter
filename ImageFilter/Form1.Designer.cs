@@ -50,6 +50,7 @@
             this.RChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.RLabel = new System.Windows.Forms.Label();
             this.MenuPanel = new System.Windows.Forms.Panel();
+            this.MyFunctionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.FilterGroupBox = new System.Windows.Forms.GroupBox();
             this.MyFunctionRadio = new System.Windows.Forms.RadioButton();
             this.GammaRadio = new System.Windows.Forms.RadioButton();
@@ -66,7 +67,6 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MyFunctionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.MainTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Image)).BeginInit();
             this.ChartTable.SuspendLayout();
@@ -77,9 +77,9 @@
             this.RChartPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RChart)).BeginInit();
             this.MenuPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MyFunctionChart)).BeginInit();
             this.FilterGroupBox.SuspendLayout();
             this.MainMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MyFunctionChart)).BeginInit();
             this.SuspendLayout();
             // 
             // MainTable
@@ -256,6 +256,22 @@
             this.MenuPanel.Size = new System.Drawing.Size(349, 731);
             this.MenuPanel.TabIndex = 2;
             // 
+            // MyFunctionChart
+            // 
+            chartArea4.Name = "ChartArea1";
+            this.MyFunctionChart.ChartAreas.Add(chartArea4);
+            this.MyFunctionChart.Location = new System.Drawing.Point(3, 452);
+            this.MyFunctionChart.Name = "MyFunctionChart";
+            this.MyFunctionChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
+            this.MyFunctionChart.PaletteCustomColors = new System.Drawing.Color[] {
+        System.Drawing.Color.Black};
+            series4.ChartArea = "ChartArea1";
+            series4.Name = "Series1";
+            this.MyFunctionChart.Series.Add(series4);
+            this.MyFunctionChart.Size = new System.Drawing.Size(342, 276);
+            this.MyFunctionChart.TabIndex = 6;
+            this.MyFunctionChart.Text = "chart1";
+            // 
             // FilterGroupBox
             // 
             this.FilterGroupBox.Controls.Add(this.MyFunctionRadio);
@@ -342,6 +358,7 @@
             this.SubmitButton.TabIndex = 4;
             this.SubmitButton.Text = "Zastosuj";
             this.SubmitButton.UseVisualStyleBackColor = true;
+            this.SubmitButton.Click += new System.EventHandler(this.SubmitButton_Click);
             // 
             // DeletePolygonButton
             // 
@@ -415,22 +432,6 @@
             this.exitToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
             this.exitToolStripMenuItem.Text = "Exit";
             // 
-            // MyFunctionChart
-            // 
-            chartArea4.Name = "ChartArea1";
-            this.MyFunctionChart.ChartAreas.Add(chartArea4);
-            this.MyFunctionChart.Location = new System.Drawing.Point(3, 452);
-            this.MyFunctionChart.Name = "MyFunctionChart";
-            this.MyFunctionChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
-            this.MyFunctionChart.PaletteCustomColors = new System.Drawing.Color[] {
-        System.Drawing.Color.Black};
-            series4.ChartArea = "ChartArea1";
-            series4.Name = "Series1";
-            this.MyFunctionChart.Series.Add(series4);
-            this.MyFunctionChart.Size = new System.Drawing.Size(342, 276);
-            this.MyFunctionChart.TabIndex = 6;
-            this.MyFunctionChart.Text = "chart1";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -456,11 +457,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.RChart)).EndInit();
             this.MenuPanel.ResumeLayout(false);
             this.MenuPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MyFunctionChart)).EndInit();
             this.FilterGroupBox.ResumeLayout(false);
             this.FilterGroupBox.PerformLayout();
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MyFunctionChart)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

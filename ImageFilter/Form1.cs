@@ -39,6 +39,30 @@ namespace ImageFilter
 
         enum BrushMode { Circle, FirstPoint, DrawPolygon, DeletePolygon };
 
+        public bool IsPointInPolygon(Point point, Point[] polygon)
+        {
+            int polygonLength = polygon.Length, i = 0;
+            bool inside = false;
+            // x, y for tested point.
+            float pointX = point.X, pointY = point.Y;
+            // start / end point for the current polygon segment.
+            float startX, startY, endX, endY;
+            Point endPoint = polygon[polygonLength - 1];
+            endX = endPoint.X;
+            endY = endPoint.Y;
+            while (i < polygonLength)
+            {
+                startX = endX; startY = endY;
+                endPoint = polygon[i++];
+                endX = endPoint.X; endY = endPoint.Y;
+                //
+                inside ^= (endY > pointY ^ startY > pointY) /* ? pointY inside [startY;endY] segment ? */
+                          && /* if so, test if it is under the segment */
+                          ((pointX - endX) < (pointY - endY) * (startX - endX) / (startY - endY));
+            }
+            return inside;
+        }
+
         public MainForm()
         {
             InitializeComponent();
@@ -82,7 +106,7 @@ namespace ImageFilter
 
         }
 
-        private void ApplyFilter()
+        private void ApplyCircleFilter()
         {
             for(int i=0; i<PhotoWidth; i++)
             {
@@ -109,11 +133,41 @@ namespace ImageFilter
             }
         }
 
+        private void ApplyPolygonFilter()
+        {
+            for (int i = 0; i < PhotoWidth; i++)
+            {
+                for (int j = 0; j < PhotoHeight; j++)
+                {
+                    if (IsAlreadyChange[i, j])
+                        continue;
+
+                    foreach(Polygon polygon in polygons)
+                    {
+                        if (IsPointInPolygon(new Point(i,j),polygon.apex.ToArray()))
+                        {
+                            int R = 0, G = 0, B = 0;
+                            if (MyFunctionRadio.Checked)
+                            {
+                                R = MyFunction(newPhoto[i, j].R);
+                                G = MyFunction(newPhoto[i, j].G);
+                                B = MyFunction(newPhoto[i, j].B);
+                            }
+
+                            newPhoto[i, j] = Color.FromArgb(R, G, B);
+                            IsAlreadyChange[i, j] = true;
+                        }
+                    }
+
+                }
+            }
+        }
+
         private void Image_Paint(object sender, PaintEventArgs e)
         {
             if(current_mode == BrushMode.Circle && isMouseClicked)
             {
-                ApplyFilter();
+                ApplyCircleFilter();
             }
 
             using (Bitmap processedBitmap = new Bitmap(PhotoWidth, PhotoHeight))
@@ -277,5 +331,11 @@ namespace ImageFilter
             current_mode = BrushMode.DeletePolygon;
         }
 
+        private void SubmitButton_Click(object sender, EventArgs e)
+        {
+            ApplyPolygonFilter();
+
+            Image.Invalidate();
+        }
     }
 }
