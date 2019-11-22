@@ -31,8 +31,11 @@ namespace ImageFilter
         Point? current_point = null;
         Point? previous_point = null;
 
+        bool[,] IsAlreadyChange = new bool[PhotoWidth, PhotoHeight];
+        bool isMouseClicked = false;
+
         BrushMode current_mode = BrushMode.Circle;
-        int radius = 60;
+        int radius = 50;
 
         enum BrushMode { Circle, FirstPoint, DrawPolygon, DeletePolygon };
 
@@ -69,87 +72,6 @@ namespace ImageFilter
             }
         }
 
-        private void PrepareMyFunctionChart()
-        {
-            MyFunctionChart.Series.Clear();
-            MyFunctionChart.ChartAreas.Clear();
-
-            ChartArea ChartArea0 = new ChartArea("Function");
-
-            MyFunctionChart.ChartAreas.Add(ChartArea0);
-            ChartArea0.AxisX.Minimum = 0;
-            ChartArea0.AxisX.Maximum = 255;
-            ChartArea0.AxisX.Interval = 255;
-            ChartArea0.AxisY.Minimum = 0;
-            ChartArea0.AxisY.Maximum = 255;
-            ChartArea0.AxisY.Interval = 255;
-
-            MyFunctionChart.Series.Add("Seria 1");
-
-            MyFunctionChart.Series["Seria 1"].ChartType = SeriesChartType.Line;
-
-            for (int i=0; i<256; i++)
-            {
-                MyFunctionChart.Series["Seria 1"].Points.AddXY(i, MyFunction(i));
-            }
-
-            MyFunctionChart.Series["Seria 1"].ChartArea = "Function";
-        }
-
-        private void PrepareCharts()
-        {
-            int[] R = new int[256];
-            int[] G = new int[256];
-            int[] B = new int[256];
-
-            RChart.Series.Clear();
-            GChart.Series.Clear();
-            BChart.Series.Clear();
-
-            RChart.ChartAreas.Clear();
-            GChart.ChartAreas.Clear();
-            BChart.ChartAreas.Clear();
-
-            for (int i=0; i<ImageBitmap.Width && i<PhotoWidth; i++)
-            {
-                for(int j=0; j<ImageBitmap.Width && j<PhotoHeight; j++)
-                {
-                    R[newPhoto[i, j].R]++;
-                    G[newPhoto[i, j].G]++;
-                    B[newPhoto[i, j].B]++;
-                }
-            }
-
-            ChartArea ChartArea0 = new ChartArea("Color R");
-            ChartArea ChartArea1 = new ChartArea("Color G");
-            ChartArea ChartArea2 = new ChartArea("Color B");
-
-            RChart.ChartAreas.Add(ChartArea0);
-            ChartArea0.AxisX.Minimum = 0;
-            ChartArea0.AxisY.Maximum = R.Max() + 50;
-            GChart.ChartAreas.Add(ChartArea1);
-            ChartArea1.AxisX.Minimum = 0;
-            ChartArea1.AxisY.Maximum = R.Max() + 50;
-            BChart.ChartAreas.Add(ChartArea2);
-            ChartArea2.AxisX.Minimum = 0;
-            ChartArea2.AxisY.Maximum = R.Max() + 50;
-
-            RChart.Series.Add("Seria 1");
-            GChart.Series.Add("Seria 1");
-            BChart.Series.Add("Seria 1");
-
-            for (int i = 0; i < 256; i++)
-            {
-                RChart.Series["Seria 1"].Points.AddXY(i, R[i]);
-                GChart.Series["Seria 1"].Points.AddXY(i, G[i]);
-                BChart.Series["Seria 1"].Points.AddXY(i, B[i]);
-            }
-
-            RChart.Series["Seria 1"].ChartArea = "Color R";
-            GChart.Series["Seria 1"].ChartArea = "Color G";
-            BChart.Series["Seria 1"].ChartArea = "Color B";
-        }
-
         private void ChartTable_Paint(object sender, PaintEventArgs e)
         {
 
@@ -160,8 +82,40 @@ namespace ImageFilter
 
         }
 
+        private void ApplyFilter()
+        {
+            for(int i=0; i<PhotoWidth; i++)
+            {
+                for(int j=0; j<PhotoHeight; j++)
+                {
+                    if (IsAlreadyChange[i, j])
+                        continue;
+
+                    double d = Math.Sqrt((i - mouse_point.X - radius) * (i - mouse_point.X - radius) + (j - mouse_point.Y - radius) * (j - mouse_point.Y - radius));
+                    if (d < radius/2)
+                    {
+                        int R=0, G=0, B=0;
+                        if(MyFunctionRadio.Checked)
+                        {
+                            R = MyFunction(newPhoto[i, j].R);
+                            G = MyFunction(newPhoto[i, j].G);
+                            B = MyFunction(newPhoto[i, j].B);
+                        }
+
+                        newPhoto[i, j] = Color.FromArgb(R, G, B);
+                        IsAlreadyChange[i, j] = true;
+                    }
+                }
+            }
+        }
+
         private void Image_Paint(object sender, PaintEventArgs e)
         {
+            if(current_mode == BrushMode.Circle && isMouseClicked)
+            {
+                ApplyFilter();
+            }
+
             using (Bitmap processedBitmap = new Bitmap(PhotoWidth, PhotoHeight))
             {
                 unsafe
@@ -199,7 +153,7 @@ namespace ImageFilter
                 }
 
                 if (mouse_point.X != -1 && current_mode == BrushMode.Circle)
-                    e.Graphics.DrawEllipse(new Pen(Brushes.Black), mouse_point.X, mouse_point.Y, radius, radius);
+                    e.Graphics.DrawEllipse(new Pen(Brushes.Black), mouse_point.X + radius/2, mouse_point.Y + radius/2, radius, radius);
 
                 PrepareCharts();
             }
@@ -222,7 +176,7 @@ namespace ImageFilter
 
         private void Image_MouseMove(object sender, MouseEventArgs e)
         {
-            mouse_point = new Point(e.X-radius/2, e.Y-radius/2);
+            mouse_point = new Point(e.X-radius, e.Y-radius);
             Cursor = Cursors.Hand;
 
             if (current_mode == BrushMode.FirstPoint && e.Button == MouseButtons.Left)
@@ -240,6 +194,43 @@ namespace ImageFilter
                 previous_point = new Point(e.Location.X, e.Location.Y);
                 current_line = ((Point)current_point, (Point)previous_point);
                 drawCurrentLine = true;
+            }
+
+            Image.Invalidate();
+        }
+
+        private void Image_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (current_mode == BrushMode.DrawPolygon)
+            {
+                Point next_point = new Point(e.Location.X, e.Location.Y);
+                CreateSegment(next_point);
+                drawCurrentLine = false;
+            }
+            else if (current_mode == BrushMode.DeletePolygon)
+            {
+                (Polygon toDelete, (Point, Point) segment) = GetPolygonWithPointOnSegment(new Point(e.Location.X, e.Location.Y));
+                if (toDelete != null)
+                {
+                    polygons.Remove(toDelete);
+                }
+            }
+            else if (current_mode == BrushMode.Circle)
+            {
+                isMouseClicked = false;
+                IsAlreadyChange = new bool[PhotoWidth, PhotoHeight];
+            }
+
+            Image.Invalidate();
+        }
+
+        private void Image_MouseDown(object sender, MouseEventArgs e)
+        {
+            mouse_point = new Point(e.X - radius, e.Y - radius);
+
+            if (current_mode == BrushMode.Circle)
+            {
+                isMouseClicked = true;
             }
 
             Image.Invalidate();
@@ -284,26 +275,6 @@ namespace ImageFilter
             }
 
             current_mode = BrushMode.DeletePolygon;
-        }
-
-        private void Image_MouseUp(object sender, MouseEventArgs e)
-        {
-            if (current_mode == BrushMode.DrawPolygon)
-            {
-                Point next_point = new Point(e.Location.X, e.Location.Y);
-                CreateSegment(next_point);
-                drawCurrentLine = false;
-            }
-            else if (current_mode == BrushMode.DeletePolygon)
-            {
-                (Polygon toDelete, (Point, Point) segment) = GetPolygonWithPointOnSegment(new Point(e.Location.X, e.Location.Y));
-                if (toDelete != null)
-                {
-                    polygons.Remove(toDelete);
-                }
-            }
-
-            Image.Invalidate();
         }
 
     }

@@ -110,6 +110,7 @@
             this.Image.TabIndex = 0;
             this.Image.TabStop = false;
             this.Image.Paint += new System.Windows.Forms.PaintEventHandler(this.Image_Paint);
+            this.Image.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Image_MouseDown);
             this.Image.MouseLeave += new System.EventHandler(this.Image_MouseLeave);
             this.Image.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Image_MouseMove);
             this.Image.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Image_MouseUp);
@@ -274,10 +275,12 @@
             // MyFunctionRadio
             // 
             this.MyFunctionRadio.AutoSize = true;
+            this.MyFunctionRadio.Checked = true;
             this.MyFunctionRadio.Location = new System.Drawing.Point(7, 144);
             this.MyFunctionRadio.Name = "MyFunctionRadio";
             this.MyFunctionRadio.Size = new System.Drawing.Size(101, 17);
             this.MyFunctionRadio.TabIndex = 5;
+            this.MyFunctionRadio.TabStop = true;
             this.MyFunctionRadio.Text = "Własna funkcja";
             this.MyFunctionRadio.UseVisualStyleBackColor = true;
             // 
@@ -324,12 +327,10 @@
             // NoFilterRadio
             // 
             this.NoFilterRadio.AutoSize = true;
-            this.NoFilterRadio.Checked = true;
             this.NoFilterRadio.Location = new System.Drawing.Point(6, 29);
             this.NoFilterRadio.Name = "NoFilterRadio";
             this.NoFilterRadio.Size = new System.Drawing.Size(69, 17);
             this.NoFilterRadio.TabIndex = 0;
-            this.NoFilterRadio.TabStop = true;
             this.NoFilterRadio.Text = "Brak filtra";
             this.NoFilterRadio.UseVisualStyleBackColor = true;
             // 
