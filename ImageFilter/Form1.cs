@@ -67,9 +67,52 @@ namespace ImageFilter
         {
             InitializeComponent();
 
+            InitializeMyFunction();
+
             InitializeImage();
             PrepareMyFunctionChart();
             Image.Invalidate();
+        }
+
+        private void InitializeMyFunction()
+        {
+            Random rnd = new Random(456);
+            int startValue = 0;
+            int endValue = rnd.Next(50,70);
+            double currentValue = 0;
+            for (int i = 0; i < 17; i++)
+            {
+                int startX = i * 15;
+                for(int j=0; j<15; j++)
+                {
+                    myFunction[startX + j] = (int)currentValue;
+                    currentValue += ((double)(endValue - startValue))/15.0;
+                }
+                startValue = (int)currentValue;
+
+                if(i<5 || i>=10)
+                {
+                    int minValue = endValue + 10;
+                    int maxValue = endValue + 50;
+                    if (minValue > 255)
+                        minValue = 255;
+                    if (maxValue > 255)
+                        maxValue = 255;
+
+                    endValue = rnd.Next(minValue, maxValue);
+                }
+                else
+                {
+                    int minValue = endValue - 50;
+                    int maxValue = endValue - 10;
+                    if (minValue < 0)
+                        minValue = 0;
+                    if (maxValue < 0)
+                        maxValue = 0;
+
+                    endValue = rnd.Next(minValue, maxValue);
+                }
+            }
         }
 
         private void InitializeImage()
@@ -127,7 +170,13 @@ namespace ImageFilter
         private void GetColor(int i, int j)
         {
             int R = 0, G = 0, B = 0;
-            if (MyFunctionRadio.Checked)
+            if(NoFilterRadio.Checked)
+            {
+                R = newPhoto[i, j].R;
+                G = newPhoto[i, j].G;
+                B = newPhoto[i, j].B;
+            }
+            else if (MyFunctionRadio.Checked)
             {
                 R = MyFunction(newPhoto[i, j].R);
                 G = MyFunction(newPhoto[i, j].G);
@@ -363,6 +412,11 @@ namespace ImageFilter
             ApplyPolygonFilter();
 
             Image.Invalidate();
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

@@ -14,10 +14,11 @@ namespace ImageFilter
 {
     public partial class MainForm : Form
     {
-        Random rnd = new Random(123);
+        int[] myFunction = new int[256];
+
         private int MyFunction(int x)
         {
-            return 120;
+            return myFunction[x];
         }
 
         private int Negation(int x)
