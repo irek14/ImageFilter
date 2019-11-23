@@ -17,7 +17,44 @@ namespace ImageFilter
         Random rnd = new Random(123);
         private int MyFunction(int x)
         {
-            return 250;
+            return 120;
+        }
+
+        private int Negation(int x)
+        {
+            return 255 - x;
+        }
+
+        private int ChangeBrightness(int x, int delta)
+        {
+            int result = x + delta;
+
+            if (result < 0)
+                result = 0;
+
+            if (result > 255)
+                result = 255;
+
+            return result;
+        }
+
+        private int Contrast(int x, int delta1, int delta2)
+        {
+            if (x <= delta1)
+                return 0;
+
+            if (x >= delta2)
+                return 255;
+
+            return 255 / (delta2 - delta1) * (x - delta1);
+        }
+
+        private int GammCorrection(int x, double gamma)
+        {
+            double newX = (double)x / 255.0;
+            double result = Math.Pow(newX, 1.0 / gamma) * 255.0;
+
+            return (int)result;
         }
     }
 }

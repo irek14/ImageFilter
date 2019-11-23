@@ -118,19 +118,48 @@ namespace ImageFilter
                     double d = Math.Sqrt((i - mouse_point.X - radius) * (i - mouse_point.X - radius) + (j - mouse_point.Y - radius) * (j - mouse_point.Y - radius));
                     if (d < radius/2)
                     {
-                        int R=0, G=0, B=0;
-                        if(MyFunctionRadio.Checked)
-                        {
-                            R = MyFunction(newPhoto[i, j].R);
-                            G = MyFunction(newPhoto[i, j].G);
-                            B = MyFunction(newPhoto[i, j].B);
-                        }
-
-                        newPhoto[i, j] = Color.FromArgb(R, G, B);
-                        IsAlreadyChange[i, j] = true;
+                        GetColor(i, j);
                     }
                 }
             }
+        }
+
+        private void GetColor(int i, int j)
+        {
+            int R = 0, G = 0, B = 0;
+            if (MyFunctionRadio.Checked)
+            {
+                R = MyFunction(newPhoto[i, j].R);
+                G = MyFunction(newPhoto[i, j].G);
+                B = MyFunction(newPhoto[i, j].B);
+            }
+            else if (NegationRadio.Checked)
+            {
+                R = Negation(newPhoto[i, j].R);
+                G = Negation(newPhoto[i, j].G);
+                B = Negation(newPhoto[i, j].B);
+            }
+            else if (BrightnessRadio.Checked)
+            {
+                R = ChangeBrightness(newPhoto[i, j].R, 40);
+                G = ChangeBrightness(newPhoto[i, j].G, 40);
+                B = ChangeBrightness(newPhoto[i, j].B, 40);
+            }
+            else if (ContrastRadio.Checked)
+            {
+                R = Contrast(newPhoto[i, j].R, 50, 200);
+                G = Contrast(newPhoto[i, j].G, 50, 200);
+                B = Contrast(newPhoto[i, j].B, 50, 200);
+            }
+            else if (GammaRadio.Checked)
+            {
+                R = GammCorrection(newPhoto[i, j].R, 0.7);
+                G = GammCorrection(newPhoto[i, j].G, 0.7);
+                B = GammCorrection(newPhoto[i, j].B, 0.7);
+            }
+
+            newPhoto[i, j] = Color.FromArgb(R, G, B);
+            IsAlreadyChange[i, j] = true;
         }
 
         private void ApplyPolygonFilter()
@@ -146,16 +175,7 @@ namespace ImageFilter
                     {
                         if (IsPointInPolygon(new Point(i,j),polygon.apex.ToArray()))
                         {
-                            int R = 0, G = 0, B = 0;
-                            if (MyFunctionRadio.Checked)
-                            {
-                                R = MyFunction(newPhoto[i, j].R);
-                                G = MyFunction(newPhoto[i, j].G);
-                                B = MyFunction(newPhoto[i, j].B);
-                            }
-
-                            newPhoto[i, j] = Color.FromArgb(R, G, B);
-                            IsAlreadyChange[i, j] = true;
+                            GetColor(i,j);
                         }
                     }
 
@@ -266,6 +286,7 @@ namespace ImageFilter
                 (Polygon toDelete, (Point, Point) segment) = GetPolygonWithPointOnSegment(new Point(e.Location.X, e.Location.Y));
                 if (toDelete != null)
                 {
+                    RepairAlreadyChangeTable(toDelete);
                     polygons.Remove(toDelete);
                 }
             }
@@ -333,6 +354,12 @@ namespace ImageFilter
 
         private void SubmitButton_Click(object sender, EventArgs e)
         {
+            if (!CheckIfDrawEnd())
+            {
+                MessageBox.Show("Żeby zasotosować filtry najpierw należy zakończyć rysowanie", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             ApplyPolygonFilter();
 
             Image.Invalidate();

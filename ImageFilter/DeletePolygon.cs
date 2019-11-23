@@ -52,5 +52,20 @@ namespace ImageFilter
 
             return p.X >= minX - 3 && p.X <= maxX + 3 && p.Y >= minY - 3 && p.Y <= maxY + 3;
         }
+
+        private void RepairAlreadyChangeTable(Polygon polygon)
+        {
+            var apex = polygon.apex.ToArray();
+            for (int i = 0; i < PhotoWidth; i++)
+            {
+                for (int j = 0; j < PhotoHeight; j++)
+                {
+                    if (IsPointInPolygon(new Point(i, j), apex))
+                    {
+                        IsAlreadyChange[i, j] = false;
+                    }
+                }
+            }
+        }
     }
 }
