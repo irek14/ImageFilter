@@ -208,7 +208,9 @@ namespace ImageFilter
             }
 
             newPhoto[i, j] = Color.FromArgb(R, G, B);
-            IsAlreadyChange[i, j] = true;
+
+            if (!NoFilterRadio.Checked)
+                IsAlreadyChange[i, j] = true;
         }
 
         private void ApplyPolygonFilter()
