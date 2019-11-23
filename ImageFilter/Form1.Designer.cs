@@ -67,6 +67,10 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.BrigthnessDelta = new System.Windows.Forms.NumericUpDown();
+            this.GammaCoefficient = new System.Windows.Forms.NumericUpDown();
+            this.ContrastFirstDelta = new System.Windows.Forms.NumericUpDown();
+            this.ContrastSecondDelta = new System.Windows.Forms.NumericUpDown();
             this.MainTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Image)).BeginInit();
             this.ChartTable.SuspendLayout();
@@ -80,6 +84,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.MyFunctionChart)).BeginInit();
             this.FilterGroupBox.SuspendLayout();
             this.MainMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BrigthnessDelta)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GammaCoefficient)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ContrastFirstDelta)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ContrastSecondDelta)).BeginInit();
             this.SuspendLayout();
             // 
             // MainTable
@@ -274,6 +282,10 @@
             // 
             // FilterGroupBox
             // 
+            this.FilterGroupBox.Controls.Add(this.ContrastSecondDelta);
+            this.FilterGroupBox.Controls.Add(this.ContrastFirstDelta);
+            this.FilterGroupBox.Controls.Add(this.GammaCoefficient);
+            this.FilterGroupBox.Controls.Add(this.BrigthnessDelta);
             this.FilterGroupBox.Controls.Add(this.MyFunctionRadio);
             this.FilterGroupBox.Controls.Add(this.GammaRadio);
             this.FilterGroupBox.Controls.Add(this.ContrastRadio);
@@ -433,6 +445,85 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
+            // BrigthnessDelta
+            // 
+            this.BrigthnessDelta.Location = new System.Drawing.Point(148, 75);
+            this.BrigthnessDelta.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.BrigthnessDelta.Minimum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            -2147483648});
+            this.BrigthnessDelta.Name = "BrigthnessDelta";
+            this.BrigthnessDelta.Size = new System.Drawing.Size(54, 20);
+            this.BrigthnessDelta.TabIndex = 6;
+            this.BrigthnessDelta.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
+            // 
+            // GammaCoefficient
+            // 
+            this.GammaCoefficient.DecimalPlaces = 1;
+            this.GammaCoefficient.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.GammaCoefficient.Location = new System.Drawing.Point(148, 98);
+            this.GammaCoefficient.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.GammaCoefficient.Name = "GammaCoefficient";
+            this.GammaCoefficient.Size = new System.Drawing.Size(54, 20);
+            this.GammaCoefficient.TabIndex = 7;
+            this.GammaCoefficient.Value = new decimal(new int[] {
+            7,
+            0,
+            0,
+            65536});
+            // 
+            // ContrastFirstDelta
+            // 
+            this.ContrastFirstDelta.Location = new System.Drawing.Point(116, 121);
+            this.ContrastFirstDelta.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.ContrastFirstDelta.Name = "ContrastFirstDelta";
+            this.ContrastFirstDelta.Size = new System.Drawing.Size(54, 20);
+            this.ContrastFirstDelta.TabIndex = 8;
+            this.ContrastFirstDelta.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            // 
+            // ContrastSecondDelta
+            // 
+            this.ContrastSecondDelta.Location = new System.Drawing.Point(176, 121);
+            this.ContrastSecondDelta.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.ContrastSecondDelta.Name = "ContrastSecondDelta";
+            this.ContrastSecondDelta.Size = new System.Drawing.Size(54, 20);
+            this.ContrastSecondDelta.TabIndex = 9;
+            this.ContrastSecondDelta.Value = new decimal(new int[] {
+            225,
+            0,
+            0,
+            0});
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -463,6 +554,10 @@
             this.FilterGroupBox.PerformLayout();
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.BrigthnessDelta)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GammaCoefficient)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ContrastFirstDelta)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ContrastSecondDelta)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -500,6 +595,10 @@
         private System.Windows.Forms.RadioButton NegationRadio;
         private System.Windows.Forms.RadioButton NoFilterRadio;
         private System.Windows.Forms.DataVisualization.Charting.Chart MyFunctionChart;
+        private System.Windows.Forms.NumericUpDown BrigthnessDelta;
+        public System.Windows.Forms.NumericUpDown GammaCoefficient;
+        private System.Windows.Forms.NumericUpDown ContrastSecondDelta;
+        private System.Windows.Forms.NumericUpDown ContrastFirstDelta;
     }
 }
 

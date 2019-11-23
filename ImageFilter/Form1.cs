@@ -190,21 +190,21 @@ namespace ImageFilter
             }
             else if (BrightnessRadio.Checked)
             {
-                R = ChangeBrightness(newPhoto[i, j].R, 40);
-                G = ChangeBrightness(newPhoto[i, j].G, 40);
-                B = ChangeBrightness(newPhoto[i, j].B, 40);
+                R = ChangeBrightness(newPhoto[i, j].R, int.Parse(BrigthnessDelta.Value.ToString()));
+                G = ChangeBrightness(newPhoto[i, j].G, int.Parse(BrigthnessDelta.Value.ToString()));
+                B = ChangeBrightness(newPhoto[i, j].B, int.Parse(BrigthnessDelta.Value.ToString()));
             }
             else if (ContrastRadio.Checked)
             {
-                R = Contrast(newPhoto[i, j].R, 50, 200);
-                G = Contrast(newPhoto[i, j].G, 50, 200);
-                B = Contrast(newPhoto[i, j].B, 50, 200);
+                R = Contrast(newPhoto[i, j].R, int.Parse(ContrastFirstDelta.Value.ToString()), int.Parse(ContrastSecondDelta.Value.ToString()));
+                G = Contrast(newPhoto[i, j].G, int.Parse(ContrastFirstDelta.Value.ToString()), int.Parse(ContrastSecondDelta.Value.ToString()));
+                B = Contrast(newPhoto[i, j].B, int.Parse(ContrastFirstDelta.Value.ToString()), int.Parse(ContrastSecondDelta.Value.ToString()));
             }
             else if (GammaRadio.Checked)
             {
-                R = GammCorrection(newPhoto[i, j].R, 0.7);
-                G = GammCorrection(newPhoto[i, j].G, 0.7);
-                B = GammCorrection(newPhoto[i, j].B, 0.7);
+                R = GammCorrection(newPhoto[i, j].R, double.Parse(GammaCoefficient.Value.ToString()));
+                G = GammCorrection(newPhoto[i, j].G, double.Parse(GammaCoefficient.Value.ToString()));
+                B = GammCorrection(newPhoto[i, j].B, double.Parse(GammaCoefficient.Value.ToString()));
             }
 
             newPhoto[i, j] = Color.FromArgb(R, G, B);
@@ -376,6 +376,7 @@ namespace ImageFilter
                 return;
             }
 
+            ModeLabel.Text = "Tryb: Dodaj wielokąt";
             current_mode = BrushMode.FirstPoint;
         }
 
@@ -387,6 +388,7 @@ namespace ImageFilter
                 return;
             }
 
+            ModeLabel.Text = "Tryb: Pędzel kołowy";
             current_mode = BrushMode.Circle;
         }
 
@@ -398,6 +400,7 @@ namespace ImageFilter
                 return;
             }
 
+            ModeLabel.Text = "Tryb: Usuń wielokąt";
             current_mode = BrushMode.DeletePolygon;
         }
 
