@@ -67,53 +67,107 @@ namespace ImageFilter
         {
             InitializeComponent();
 
-            InitializeMyFunction();
+            //InitializeMyFunction();
+            InitializePointList();
+
+            MyFunctionPicture.Invalidate();
 
             InitializeImage();
             PrepareMyFunctionChart();
             Image.Invalidate();
         }
 
+        Point cartesianStart = new Point(45, 265);
+        List<Point> myPoints = new List<Point>();
+
+        private void InitializePointList()
+        {
+            myPoints.Add(new Point(cartesianStart.X, cartesianStart.Y));
+            myPoints.Add(new Point(cartesianStart.X+15, cartesianStart.Y-10));
+            myPoints.Add(new Point(cartesianStart.X+30, cartesianStart.Y-50));
+            myPoints.Add(new Point(cartesianStart.X+45, cartesianStart.Y-80));
+            myPoints.Add(new Point(cartesianStart.X+60, cartesianStart.Y-90));
+            myPoints.Add(new Point(cartesianStart.X+75, cartesianStart.Y-85));
+            myPoints.Add(new Point(cartesianStart.X+90, cartesianStart.Y-70));
+            myPoints.Add(new Point(cartesianStart.X+105, cartesianStart.Y-60));
+            myPoints.Add(new Point(cartesianStart.X+120, cartesianStart.Y-20));
+            myPoints.Add(new Point(cartesianStart.X+135, cartesianStart.Y-10));
+            myPoints.Add(new Point(cartesianStart.X+150, cartesianStart.Y-55));
+            myPoints.Add(new Point(cartesianStart.X+165, cartesianStart.Y-80));
+            myPoints.Add(new Point(cartesianStart.X+180, cartesianStart.Y-95));
+            myPoints.Add(new Point(cartesianStart.X+195, cartesianStart.Y-105));
+            myPoints.Add(new Point(cartesianStart.X+210, cartesianStart.Y-145));
+            myPoints.Add(new Point(cartesianStart.X+225, cartesianStart.Y-160));
+            myPoints.Add(new Point(cartesianStart.X+240, cartesianStart.Y-200));
+            myPoints.Add(new Point(cartesianStart.X+255, cartesianStart.Y-240));
+        }
+
+        private void MyFunctionPicture_Paint(object sender, PaintEventArgs e)
+        {
+            Pen pen = new Pen(Brushes.Black);
+
+            e.Graphics.DrawLine(pen, cartesianStart, new Point(cartesianStart.X, cartesianStart.Y - 256));
+            e.Graphics.DrawLine(pen, cartesianStart, new Point(cartesianStart.X + 256, cartesianStart.Y));
+
+            for (int i = 0; i < myPoints.Count-1; i++)
+            {
+                e.Graphics.DrawLine(pen, myPoints[i], myPoints[i + 1]);
+                e.Graphics.FillRectangle(Brushes.Black, myPoints[i].X - 3, myPoints[i].Y - 3, 6, 6);
+            }
+
+            e.Graphics.FillRectangle(Brushes.Black, myPoints[myPoints.Count - 1].X - 3, myPoints[myPoints.Count - 1].Y - 3, 6, 6);
+
+            //for (int i = 0; i < MyFunctionPicture.Width; i+=15)
+            //{
+            //    e.Graphics.DrawLine(new Pen(Color.Black,1), new Point(i, 0), new Point(i, MyFunctionPicture.Height - 5));
+            //}
+        }
+
         private void InitializeMyFunction()
         {
-            Random rnd = new Random(456);
-            int startValue = 0;
-            int endValue = rnd.Next(50,70);
-            double currentValue = 0;
-            for (int i = 0; i < 17; i++)
-            {
-                int startX = i * 15;
-                for(int j=0; j<15; j++)
-                {
-                    myFunction[startX + j] = (int)currentValue;
-                    currentValue += ((double)(endValue - startValue))/15.0;
-                }
-                startValue = (int)currentValue;
 
-                if(i<5 || i>=10)
-                {
-                    int minValue = endValue + 10;
-                    int maxValue = endValue + 50;
-                    if (minValue > 255)
-                        minValue = 255;
-                    if (maxValue > 255)
-                        maxValue = 255;
-
-                    endValue = rnd.Next(minValue, maxValue);
-                }
-                else
-                {
-                    int minValue = endValue - 50;
-                    int maxValue = endValue - 10;
-                    if (minValue < 0)
-                        minValue = 0;
-                    if (maxValue < 0)
-                        maxValue = 0;
-
-                    endValue = rnd.Next(minValue, maxValue);
-                }
-            }
         }
+
+        //private void InitializeMyFunction()
+        //{
+        //    Random rnd = new Random(456);
+        //    int startValue = 0;
+        //    int endValue = rnd.Next(50,70);
+        //    double currentValue = 0;
+        //    for (int i = 0; i < 17; i++)
+        //    {
+        //        int startX = i * 15;
+        //        for(int j=0; j<15; j++)
+        //        {
+        //            myFunction[startX + j] = (int)currentValue;
+        //            currentValue += ((double)(endValue - startValue))/15.0;
+        //        }
+        //        startValue = (int)currentValue;
+
+        //        if(i<5 || i>=10)
+        //        {
+        //            int minValue = endValue + 10;
+        //            int maxValue = endValue + 50;
+        //            if (minValue > 255)
+        //                minValue = 255;
+        //            if (maxValue > 255)
+        //                maxValue = 255;
+
+        //            endValue = rnd.Next(minValue, maxValue);
+        //        }
+        //        else
+        //        {
+        //            int minValue = endValue - 50;
+        //            int maxValue = endValue - 10;
+        //            if (minValue < 0)
+        //                minValue = 0;
+        //            if (maxValue < 0)
+        //                maxValue = 0;
+
+        //            endValue = rnd.Next(minValue, maxValue);
+        //        }
+        //    }
+        //}
 
         private void InitializeImage()
         {

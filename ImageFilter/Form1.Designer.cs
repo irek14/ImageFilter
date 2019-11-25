@@ -52,6 +52,10 @@
             this.MenuPanel = new System.Windows.Forms.Panel();
             this.MyFunctionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.FilterGroupBox = new System.Windows.Forms.GroupBox();
+            this.ContrastSecondDelta = new System.Windows.Forms.NumericUpDown();
+            this.ContrastFirstDelta = new System.Windows.Forms.NumericUpDown();
+            this.GammaCoefficient = new System.Windows.Forms.NumericUpDown();
+            this.BrigthnessDelta = new System.Windows.Forms.NumericUpDown();
             this.MyFunctionRadio = new System.Windows.Forms.RadioButton();
             this.GammaRadio = new System.Windows.Forms.RadioButton();
             this.ContrastRadio = new System.Windows.Forms.RadioButton();
@@ -67,10 +71,10 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.BrigthnessDelta = new System.Windows.Forms.NumericUpDown();
-            this.GammaCoefficient = new System.Windows.Forms.NumericUpDown();
-            this.ContrastFirstDelta = new System.Windows.Forms.NumericUpDown();
-            this.ContrastSecondDelta = new System.Windows.Forms.NumericUpDown();
+            this.MyFunctionPicture = new System.Windows.Forms.PictureBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label3 = new System.Windows.Forms.Label();
             this.MainTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Image)).BeginInit();
             this.ChartTable.SuspendLayout();
@@ -83,11 +87,12 @@
             this.MenuPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.MyFunctionChart)).BeginInit();
             this.FilterGroupBox.SuspendLayout();
-            this.MainMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BrigthnessDelta)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GammaCoefficient)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ContrastFirstDelta)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ContrastSecondDelta)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ContrastFirstDelta)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GammaCoefficient)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BrigthnessDelta)).BeginInit();
+            this.MainMenu.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MyFunctionPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // MainTable
@@ -251,7 +256,10 @@
             // 
             // MenuPanel
             // 
-            this.MenuPanel.Controls.Add(this.MyFunctionChart);
+            this.MenuPanel.Controls.Add(this.label3);
+            this.MenuPanel.Controls.Add(this.label2);
+            this.MenuPanel.Controls.Add(this.label1);
+            this.MenuPanel.Controls.Add(this.MyFunctionPicture);
             this.MenuPanel.Controls.Add(this.FilterGroupBox);
             this.MenuPanel.Controls.Add(this.SubmitButton);
             this.MenuPanel.Controls.Add(this.DeletePolygonButton);
@@ -268,7 +276,7 @@
             // 
             chartArea4.Name = "ChartArea1";
             this.MyFunctionChart.ChartAreas.Add(chartArea4);
-            this.MyFunctionChart.Location = new System.Drawing.Point(3, 452);
+            this.MyFunctionChart.Location = new System.Drawing.Point(-63, -60);
             this.MyFunctionChart.Name = "MyFunctionChart";
             this.MyFunctionChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
             this.MyFunctionChart.PaletteCustomColors = new System.Drawing.Color[] {
@@ -282,6 +290,7 @@
             // 
             // FilterGroupBox
             // 
+            this.FilterGroupBox.Controls.Add(this.MyFunctionChart);
             this.FilterGroupBox.Controls.Add(this.ContrastSecondDelta);
             this.FilterGroupBox.Controls.Add(this.ContrastFirstDelta);
             this.FilterGroupBox.Controls.Add(this.GammaCoefficient);
@@ -299,6 +308,85 @@
             this.FilterGroupBox.TabStop = false;
             this.FilterGroupBox.Text = "Filtry";
             this.FilterGroupBox.Enter += new System.EventHandler(this.groupBox1_Enter);
+            // 
+            // ContrastSecondDelta
+            // 
+            this.ContrastSecondDelta.Location = new System.Drawing.Point(176, 121);
+            this.ContrastSecondDelta.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.ContrastSecondDelta.Name = "ContrastSecondDelta";
+            this.ContrastSecondDelta.Size = new System.Drawing.Size(54, 20);
+            this.ContrastSecondDelta.TabIndex = 9;
+            this.ContrastSecondDelta.Value = new decimal(new int[] {
+            225,
+            0,
+            0,
+            0});
+            // 
+            // ContrastFirstDelta
+            // 
+            this.ContrastFirstDelta.Location = new System.Drawing.Point(116, 121);
+            this.ContrastFirstDelta.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.ContrastFirstDelta.Name = "ContrastFirstDelta";
+            this.ContrastFirstDelta.Size = new System.Drawing.Size(54, 20);
+            this.ContrastFirstDelta.TabIndex = 8;
+            this.ContrastFirstDelta.Value = new decimal(new int[] {
+            30,
+            0,
+            0,
+            0});
+            // 
+            // GammaCoefficient
+            // 
+            this.GammaCoefficient.DecimalPlaces = 1;
+            this.GammaCoefficient.Increment = new decimal(new int[] {
+            1,
+            0,
+            0,
+            65536});
+            this.GammaCoefficient.Location = new System.Drawing.Point(148, 98);
+            this.GammaCoefficient.Maximum = new decimal(new int[] {
+            50,
+            0,
+            0,
+            0});
+            this.GammaCoefficient.Name = "GammaCoefficient";
+            this.GammaCoefficient.Size = new System.Drawing.Size(54, 20);
+            this.GammaCoefficient.TabIndex = 7;
+            this.GammaCoefficient.Value = new decimal(new int[] {
+            7,
+            0,
+            0,
+            65536});
+            // 
+            // BrigthnessDelta
+            // 
+            this.BrigthnessDelta.Location = new System.Drawing.Point(148, 75);
+            this.BrigthnessDelta.Maximum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            0});
+            this.BrigthnessDelta.Minimum = new decimal(new int[] {
+            255,
+            0,
+            0,
+            -2147483648});
+            this.BrigthnessDelta.Name = "BrigthnessDelta";
+            this.BrigthnessDelta.Size = new System.Drawing.Size(54, 20);
+            this.BrigthnessDelta.TabIndex = 6;
+            this.BrigthnessDelta.Value = new decimal(new int[] {
+            40,
+            0,
+            0,
+            0});
             // 
             // MyFunctionRadio
             // 
@@ -445,84 +533,45 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // BrigthnessDelta
+            // MyFunctionPicture
             // 
-            this.BrigthnessDelta.Location = new System.Drawing.Point(148, 75);
-            this.BrigthnessDelta.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.BrigthnessDelta.Minimum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            -2147483648});
-            this.BrigthnessDelta.Name = "BrigthnessDelta";
-            this.BrigthnessDelta.Size = new System.Drawing.Size(54, 20);
-            this.BrigthnessDelta.TabIndex = 6;
-            this.BrigthnessDelta.Value = new decimal(new int[] {
-            40,
-            0,
-            0,
-            0});
+            this.MyFunctionPicture.BackColor = System.Drawing.Color.White;
+            this.MyFunctionPicture.Location = new System.Drawing.Point(3, 452);
+            this.MyFunctionPicture.Name = "MyFunctionPicture";
+            this.MyFunctionPicture.Size = new System.Drawing.Size(343, 276);
+            this.MyFunctionPicture.TabIndex = 6;
+            this.MyFunctionPicture.TabStop = false;
+            this.MyFunctionPicture.Paint += new System.Windows.Forms.PaintEventHandler(this.MyFunctionPicture_Paint);
             // 
-            // GammaCoefficient
+            // label1
             // 
-            this.GammaCoefficient.DecimalPlaces = 1;
-            this.GammaCoefficient.Increment = new decimal(new int[] {
-            1,
-            0,
-            0,
-            65536});
-            this.GammaCoefficient.Location = new System.Drawing.Point(148, 98);
-            this.GammaCoefficient.Maximum = new decimal(new int[] {
-            50,
-            0,
-            0,
-            0});
-            this.GammaCoefficient.Name = "GammaCoefficient";
-            this.GammaCoefficient.Size = new System.Drawing.Size(54, 20);
-            this.GammaCoefficient.TabIndex = 7;
-            this.GammaCoefficient.Value = new decimal(new int[] {
-            7,
-            0,
-            0,
-            65536});
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(23, 461);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(25, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "255";
             // 
-            // ContrastFirstDelta
+            // label2
             // 
-            this.ContrastFirstDelta.Location = new System.Drawing.Point(116, 121);
-            this.ContrastFirstDelta.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.ContrastFirstDelta.Name = "ContrastFirstDelta";
-            this.ContrastFirstDelta.Size = new System.Drawing.Size(54, 20);
-            this.ContrastFirstDelta.TabIndex = 8;
-            this.ContrastFirstDelta.Value = new decimal(new int[] {
-            30,
-            0,
-            0,
-            0});
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(303, 718);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(25, 13);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "255";
             // 
-            // ContrastSecondDelta
+            // label3
             // 
-            this.ContrastSecondDelta.Location = new System.Drawing.Point(176, 121);
-            this.ContrastSecondDelta.Maximum = new decimal(new int[] {
-            255,
-            0,
-            0,
-            0});
-            this.ContrastSecondDelta.Name = "ContrastSecondDelta";
-            this.ContrastSecondDelta.Size = new System.Drawing.Size(54, 20);
-            this.ContrastSecondDelta.TabIndex = 9;
-            this.ContrastSecondDelta.Value = new decimal(new int[] {
-            225,
-            0,
-            0,
-            0});
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(23, 718);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(13, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "0";
             // 
             // MainForm
             // 
@@ -552,12 +601,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.MyFunctionChart)).EndInit();
             this.FilterGroupBox.ResumeLayout(false);
             this.FilterGroupBox.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.ContrastSecondDelta)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.ContrastFirstDelta)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.GammaCoefficient)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.BrigthnessDelta)).EndInit();
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.BrigthnessDelta)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.GammaCoefficient)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ContrastFirstDelta)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.ContrastSecondDelta)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.MyFunctionPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -599,6 +649,10 @@
         public System.Windows.Forms.NumericUpDown GammaCoefficient;
         private System.Windows.Forms.NumericUpDown ContrastSecondDelta;
         private System.Windows.Forms.NumericUpDown ContrastFirstDelta;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.PictureBox MyFunctionPicture;
     }
 }
 
