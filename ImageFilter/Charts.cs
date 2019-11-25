@@ -15,33 +15,6 @@ namespace ImageFilter
 {
     public partial class MainForm : Form
     {
-        private void PrepareMyFunctionChart()
-        {
-            MyFunctionChart.Series.Clear();
-            MyFunctionChart.ChartAreas.Clear();
-
-            ChartArea ChartArea0 = new ChartArea("Function");
-
-            MyFunctionChart.ChartAreas.Add(ChartArea0);
-            ChartArea0.AxisX.Minimum = 0;
-            ChartArea0.AxisX.Maximum = 255;
-            ChartArea0.AxisX.Interval = 255;
-            ChartArea0.AxisY.Minimum = 0;
-            ChartArea0.AxisY.Maximum = 255;
-            ChartArea0.AxisY.Interval = 255;
-
-            MyFunctionChart.Series.Add("Seria 1");
-
-            MyFunctionChart.Series["Seria 1"].ChartType = SeriesChartType.Line;
-
-            for (int i = 0; i < 256; i++)
-            {
-                MyFunctionChart.Series["Seria 1"].Points.AddXY(i, MyFunction(i));
-            }
-
-            MyFunctionChart.Series["Seria 1"].ChartArea = "Function";
-        }
-
         private void PrepareCharts()
         {
             int[] R = new int[256];
@@ -56,9 +29,9 @@ namespace ImageFilter
             GChart.ChartAreas.Clear();
             BChart.ChartAreas.Clear();
 
-            for (int i = 0; i < ImageBitmap.Width && i < PhotoWidth; i++)
+            for (int i = 0; i < ImageBitmap.Width && i < Image.Width; i++)
             {
-                for (int j = 0; j < ImageBitmap.Width && j < PhotoHeight; j++)
+                for (int j = 0; j < ImageBitmap.Height && j < Image.Height; j++)
                 {
                     R[newPhoto[i, j].R]++;
                     G[newPhoto[i, j].G]++;

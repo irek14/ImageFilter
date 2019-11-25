@@ -56,9 +56,9 @@ namespace ImageFilter
         private void RepairAlreadyChangeTable(Polygon polygon)
         {
             var apex = polygon.apex.ToArray();
-            for (int i = 0; i < PhotoWidth; i++)
+            for (int i = 0; i < Image.Width; i++)
             {
-                for (int j = 0; j < PhotoHeight; j++)
+                for (int j = 0; j < Image.Height; j++)
                 {
                     if (IsPointInPolygon(new Point(i, j), apex))
                     {

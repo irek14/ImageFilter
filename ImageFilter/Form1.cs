@@ -17,8 +17,6 @@ namespace ImageFilter
 {
     public partial class MainForm : Form
     {
-        const int PhotoWidth = 467;
-        const int PhotoHeight = 731;
         Color[,] photo;
         Color[,] newPhoto;
 
@@ -31,7 +29,7 @@ namespace ImageFilter
         Point? current_point = null;
         Point? previous_point = null;
 
-        bool[,] IsAlreadyChange = new bool[PhotoWidth, PhotoHeight];
+        bool[,] IsAlreadyChange;
         bool isMouseClicked = false;
 
         BrushMode current_mode = BrushMode.Circle;
@@ -67,13 +65,13 @@ namespace ImageFilter
         {
             InitializeComponent();
 
-            //InitializeMyFunction();
             InitializePointList();
-
+            InitializeMyFunction();
             MyFunctionPicture.Invalidate();
 
+            IsAlreadyChange = new bool[Image.Width, Image.Height];
+
             InitializeImage();
-            PrepareMyFunctionChart();
             Image.Invalidate();
         }
 
@@ -128,11 +126,6 @@ namespace ImageFilter
             }
         }
 
-        private void InitializeMyFunction()
-        {
-
-        }
-
         private void MyFunctionPicture_MouseDown(object sender, MouseEventArgs e)
         {
             chartPoint = GetPoint(new Point(e.X, e.Y));
@@ -164,55 +157,33 @@ namespace ImageFilter
             return false;
         }
 
-        //private void InitializeMyFunction()
-        //{
-        //    Random rnd = new Random(456);
-        //    int startValue = 0;
-        //    int endValue = rnd.Next(50,70);
-        //    double currentValue = 0;
-        //    for (int i = 0; i < 17; i++)
-        //    {
-        //        int startX = i * 15;
-        //        for(int j=0; j<15; j++)
-        //        {
-        //            myFunction[startX + j] = (int)currentValue;
-        //            currentValue += ((double)(endValue - startValue))/15.0;
-        //        }
-        //        startValue = (int)currentValue;
-
-        //        if(i<5 || i>=10)
-        //        {
-        //            int minValue = endValue + 10;
-        //            int maxValue = endValue + 50;
-        //            if (minValue > 255)
-        //                minValue = 255;
-        //            if (maxValue > 255)
-        //                maxValue = 255;
-
-        //            endValue = rnd.Next(minValue, maxValue);
-        //        }
-        //        else
-        //        {
-        //            int minValue = endValue - 50;
-        //            int maxValue = endValue - 10;
-        //            if (minValue < 0)
-        //                minValue = 0;
-        //            if (maxValue < 0)
-        //                maxValue = 0;
-
-        //            endValue = rnd.Next(minValue, maxValue);
-        //        }
-        //    }
-        //}
+        private void InitializeMyFunction()
+        {
+            int startValue = cartesianStart.Y - myPoints[0].Y;
+            int endValue=0;
+            double currentValue = cartesianStart.Y - myPoints[0].Y;
+            for (int i = 0; i < 17; i++)
+            {
+                endValue = cartesianStart.Y - myPoints[i+1].Y;
+                int startX = i * 15;
+                for (int j = 0; j < 15; j++)
+                {
+                    myFunction[startX + j] = (int)currentValue;
+                    currentValue += ((double)(endValue - startValue)) / 15.0;
+                }
+                startValue = (int)currentValue;
+            }
+            myFunction[255] = endValue;
+        }
 
         private void InitializeImage()
         {
-            photo = new Color[PhotoWidth, PhotoHeight];
-            newPhoto = new Color[PhotoWidth, PhotoHeight];
+            photo = new Color[Image.Width, Image.Height];
+            newPhoto = new Color[Image.Width, Image.Height];
 
-            for (int i = 0; i < PhotoWidth; i++)
+            for (int i = 0; i < Image.Width; i++)
             {
-                for (int j = 0; j < PhotoHeight; j++)
+                for (int j = 0; j < Image.Height; j++)
                 {
                     if (i < ImageBitmap.Width && j < ImageBitmap.Height)
                     {
@@ -241,10 +212,16 @@ namespace ImageFilter
 
         private void ApplyCircleFilter()
         {
-            for(int i=0; i<PhotoWidth; i++)
+            for(int i=0; i<ImageBitmap.Width; i++)
             {
-                for(int j=0; j<PhotoHeight; j++)
+                if (Image.Width <= i)
+                    break;
+
+                for (int j = 0; j < ImageBitmap.Height; j++)
                 {
+                    if (Image.Height <= j)
+                        break;
+
                     if (IsAlreadyChange[i, j])
                         continue;
 
@@ -305,10 +282,16 @@ namespace ImageFilter
 
         private void ApplyPolygonFilter()
         {
-            for (int i = 0; i < PhotoWidth; i++)
+            for (int i = 0; i < ImageBitmap.Width; i++)
             {
-                for (int j = 0; j < PhotoHeight; j++)
+                if (Image.Width <= i)
+                    break;
+
+                for (int j = 0; j < ImageBitmap.Height; j++)
                 {
+                    if (Image.Height <= j)
+                        break;
+
                     if (IsAlreadyChange[i, j])
                         continue;
 
@@ -331,7 +314,7 @@ namespace ImageFilter
                 ApplyCircleFilter();
             }
 
-            using (Bitmap processedBitmap = new Bitmap(PhotoWidth, PhotoHeight))
+            using (Bitmap processedBitmap = new Bitmap(newPhoto.GetLength(0), newPhoto.GetLength(1)))
             {
                 unsafe
                 {
@@ -368,7 +351,7 @@ namespace ImageFilter
                 }
 
                 if (mouse_point.X != -1 && current_mode == BrushMode.Circle)
-                    e.Graphics.DrawEllipse(new Pen(Brushes.Black), mouse_point.X + radius/2, mouse_point.Y + radius/2, radius, radius);
+                    e.Graphics.DrawEllipse(new Pen(Brushes.Black), mouse_point.X + radius / 2, mouse_point.Y + radius / 2, radius, radius);
 
                 PrepareCharts();
             }
@@ -384,6 +367,8 @@ namespace ImageFilter
             if (choofdlog.ShowDialog() == DialogResult.OK)
             {
                 ImageBitmap = new Bitmap(choofdlog.FileName);
+                IsAlreadyChange = new bool[Image.Width, Image.Height];
+                polygons.Clear();
                 InitializeImage();
                 Image.Invalidate();
             }
@@ -434,7 +419,7 @@ namespace ImageFilter
             else if (current_mode == BrushMode.Circle)
             {
                 isMouseClicked = false;
-                IsAlreadyChange = new bool[PhotoWidth, PhotoHeight];
+                IsAlreadyChange = new bool[Image.Width, Image.Height];
             }
 
             Image.Invalidate();
@@ -519,6 +504,7 @@ namespace ImageFilter
             chartPoint = new Point(-1, -1);
             MyFunctionPicture.Invalidate();
             Cursor = Cursors.Default;
+            InitializeMyFunction();
         }
 
         private void MyFunctionPicture_MouseMove(object sender, MouseEventArgs e)
@@ -528,8 +514,8 @@ namespace ImageFilter
 
             int newY = e.Y;
 
-            if (newY < cartesianStart.Y - 256)
-                newY = cartesianStart.Y - 256;
+            if (newY < cartesianStart.Y - 255)
+                newY = cartesianStart.Y - 255;
 
             if (newY > cartesianStart.Y)
                 newY = cartesianStart.Y;

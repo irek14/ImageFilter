@@ -48,6 +48,10 @@
             this.RChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.RLabel = new System.Windows.Forms.Label();
             this.MenuPanel = new System.Windows.Forms.Panel();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label2 = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.MyFunctionPicture = new System.Windows.Forms.PictureBox();
             this.FilterGroupBox = new System.Windows.Forms.GroupBox();
             this.ContrastSecondDelta = new System.Windows.Forms.NumericUpDown();
             this.ContrastFirstDelta = new System.Windows.Forms.NumericUpDown();
@@ -68,10 +72,6 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MyFunctionPicture = new System.Windows.Forms.PictureBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
             this.MainTable.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Image)).BeginInit();
             this.ChartTable.SuspendLayout();
@@ -82,13 +82,13 @@
             this.RChartPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RChart)).BeginInit();
             this.MenuPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MyFunctionPicture)).BeginInit();
             this.FilterGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContrastSecondDelta)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ContrastFirstDelta)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.GammaCoefficient)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.BrigthnessDelta)).BeginInit();
             this.MainMenu.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MyFunctionPicture)).BeginInit();
             this.SuspendLayout();
             // 
             // MainTable
@@ -267,6 +267,49 @@
             this.MenuPanel.Name = "MenuPanel";
             this.MenuPanel.Size = new System.Drawing.Size(349, 731);
             this.MenuPanel.TabIndex = 2;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.BackColor = System.Drawing.Color.White;
+            this.label3.Location = new System.Drawing.Point(23, 718);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(13, 13);
+            this.label3.TabIndex = 9;
+            this.label3.Text = "0";
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.BackColor = System.Drawing.Color.White;
+            this.label2.Location = new System.Drawing.Point(303, 718);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(25, 13);
+            this.label2.TabIndex = 8;
+            this.label2.Text = "255";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.BackColor = System.Drawing.Color.White;
+            this.label1.Location = new System.Drawing.Point(23, 461);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(25, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "255";
+            // 
+            // MyFunctionPicture
+            // 
+            this.MyFunctionPicture.BackColor = System.Drawing.Color.White;
+            this.MyFunctionPicture.Location = new System.Drawing.Point(3, 452);
+            this.MyFunctionPicture.Name = "MyFunctionPicture";
+            this.MyFunctionPicture.Size = new System.Drawing.Size(343, 276);
+            this.MyFunctionPicture.TabIndex = 6;
+            this.MyFunctionPicture.TabStop = false;
+            this.MyFunctionPicture.Paint += new System.Windows.Forms.PaintEventHandler(this.MyFunctionPicture_Paint);
+            this.MyFunctionPicture.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MyFunctionPicture_MouseDown);
+            this.MyFunctionPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MyFunctionPicture_MouseMove);
+            this.MyFunctionPicture.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MyFunctionPicture_MouseUp);
             // 
             // FilterGroupBox
             // 
@@ -512,49 +555,6 @@
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
-            // MyFunctionPicture
-            // 
-            this.MyFunctionPicture.BackColor = System.Drawing.Color.White;
-            this.MyFunctionPicture.Location = new System.Drawing.Point(3, 452);
-            this.MyFunctionPicture.Name = "MyFunctionPicture";
-            this.MyFunctionPicture.Size = new System.Drawing.Size(343, 276);
-            this.MyFunctionPicture.TabIndex = 6;
-            this.MyFunctionPicture.TabStop = false;
-            this.MyFunctionPicture.Paint += new System.Windows.Forms.PaintEventHandler(this.MyFunctionPicture_Paint);
-            this.MyFunctionPicture.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MyFunctionPicture_MouseDown);
-            this.MyFunctionPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MyFunctionPicture_MouseMove);
-            this.MyFunctionPicture.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MyFunctionPicture_MouseUp);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.White;
-            this.label1.Location = new System.Drawing.Point(23, 461);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(25, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "255";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.White;
-            this.label2.Location = new System.Drawing.Point(303, 718);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(25, 13);
-            this.label2.TabIndex = 8;
-            this.label2.Text = "255";
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.White;
-            this.label3.Location = new System.Drawing.Point(23, 718);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(13, 13);
-            this.label3.TabIndex = 9;
-            this.label3.Text = "0";
-            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -564,6 +564,7 @@
             this.Controls.Add(this.MainMenu);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.MainMenu;
+            this.MinimumSize = new System.Drawing.Size(1200, 800);
             this.Name = "MainForm";
             this.Text = "Image Filter";
             this.MainTable.ResumeLayout(false);
@@ -580,6 +581,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.RChart)).EndInit();
             this.MenuPanel.ResumeLayout(false);
             this.MenuPanel.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.MyFunctionPicture)).EndInit();
             this.FilterGroupBox.ResumeLayout(false);
             this.FilterGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContrastSecondDelta)).EndInit();
@@ -588,7 +590,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.BrigthnessDelta)).EndInit();
             this.MainMenu.ResumeLayout(false);
             this.MainMenu.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MyFunctionPicture)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
