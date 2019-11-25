@@ -79,6 +79,7 @@ namespace ImageFilter
 
         Point cartesianStart = new Point(45, 265);
         List<Point> myPoints = new List<Point>();
+        Point chartPoint = new Point(-1, -1);
 
         private void InitializePointList()
         {
@@ -111,21 +112,56 @@ namespace ImageFilter
 
             for (int i = 0; i < myPoints.Count-1; i++)
             {
-                e.Graphics.DrawLine(pen, myPoints[i], myPoints[i + 1]);
-                e.Graphics.FillRectangle(Brushes.Black, myPoints[i].X - 3, myPoints[i].Y - 3, 6, 6);
+                e.Graphics.DrawLine(pen, myPoints[i], myPoints[i + 1]); 
             }
 
-            e.Graphics.FillRectangle(Brushes.Black, myPoints[myPoints.Count - 1].X - 3, myPoints[myPoints.Count - 1].Y - 3, 6, 6);
-
-            //for (int i = 0; i < MyFunctionPicture.Width; i+=15)
-            //{
-            //    e.Graphics.DrawLine(new Pen(Color.Black,1), new Point(i, 0), new Point(i, MyFunctionPicture.Height - 5));
-            //}
+            foreach(var point in myPoints)
+            {
+                if(chartPoint == point)
+                {
+                    e.Graphics.FillRectangle(Brushes.Red, point.X - 3, point.Y - 3, 6, 6);
+                }
+                else
+                {
+                    e.Graphics.FillRectangle(Brushes.Black, point.X - 3, point.Y - 3, 6, 6);
+                }
+            }
         }
 
         private void InitializeMyFunction()
         {
 
+        }
+
+        private void MyFunctionPicture_MouseDown(object sender, MouseEventArgs e)
+        {
+            chartPoint = GetPoint(new Point(e.X, e.Y));
+            if(chartPoint != new Point(-1,-1))
+            {
+                MyFunctionPicture.Invalidate();
+                Cursor = Cursors.SizeNS;
+            }
+            
+        }
+
+        private Point GetPoint(Point p)
+        {
+            foreach (var point in myPoints)
+            {
+                if (CheckIfPoint(p, point))
+                {
+                    return point;
+                }
+            }
+            return new Point(-1,-1);
+        }
+
+        private bool CheckIfPoint(Point p, Point vertex)
+        {
+            if (Math.Abs(p.X - vertex.X) <= 5 && Math.Abs(p.Y - vertex.Y) <= 5)
+                return true;
+
+            return false;
         }
 
         //private void InitializeMyFunction()
@@ -476,6 +512,39 @@ namespace ImageFilter
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Application.Exit();
+        }
+
+        private void MyFunctionPicture_MouseUp(object sender, MouseEventArgs e)
+        {
+            chartPoint = new Point(-1, -1);
+            MyFunctionPicture.Invalidate();
+            Cursor = Cursors.Default;
+        }
+
+        private void MyFunctionPicture_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (chartPoint == new Point(-1, -1))
+                return;
+
+            int newY = e.Y;
+
+            if (newY < cartesianStart.Y - 256)
+                newY = cartesianStart.Y - 256;
+
+            if (newY > cartesianStart.Y)
+                newY = cartesianStart.Y;
+
+            for(int i=0; i<myPoints.Count; i++)
+            {
+                if(myPoints[i] == chartPoint)
+                {
+                    Point newPoint = new Point(myPoints[i].X, newY);
+                    myPoints[i] = newPoint;
+                    chartPoint = newPoint;
+                    MyFunctionPicture.Invalidate();
+                    return;
+                }
+            }
         }
     }
 }

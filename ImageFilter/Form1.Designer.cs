@@ -34,8 +34,6 @@
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.MainTable = new System.Windows.Forms.TableLayoutPanel();
             this.Image = new System.Windows.Forms.PictureBox();
@@ -50,7 +48,6 @@
             this.RChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.RLabel = new System.Windows.Forms.Label();
             this.MenuPanel = new System.Windows.Forms.Panel();
-            this.MyFunctionChart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.FilterGroupBox = new System.Windows.Forms.GroupBox();
             this.ContrastSecondDelta = new System.Windows.Forms.NumericUpDown();
             this.ContrastFirstDelta = new System.Windows.Forms.NumericUpDown();
@@ -85,7 +82,6 @@
             this.RChartPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.RChart)).BeginInit();
             this.MenuPanel.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MyFunctionChart)).BeginInit();
             this.FilterGroupBox.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContrastSecondDelta)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.ContrastFirstDelta)).BeginInit();
@@ -272,25 +268,8 @@
             this.MenuPanel.Size = new System.Drawing.Size(349, 731);
             this.MenuPanel.TabIndex = 2;
             // 
-            // MyFunctionChart
-            // 
-            chartArea4.Name = "ChartArea1";
-            this.MyFunctionChart.ChartAreas.Add(chartArea4);
-            this.MyFunctionChart.Location = new System.Drawing.Point(-63, -60);
-            this.MyFunctionChart.Name = "MyFunctionChart";
-            this.MyFunctionChart.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.None;
-            this.MyFunctionChart.PaletteCustomColors = new System.Drawing.Color[] {
-        System.Drawing.Color.Black};
-            series4.ChartArea = "ChartArea1";
-            series4.Name = "Series1";
-            this.MyFunctionChart.Series.Add(series4);
-            this.MyFunctionChart.Size = new System.Drawing.Size(342, 276);
-            this.MyFunctionChart.TabIndex = 6;
-            this.MyFunctionChart.Text = "chart1";
-            // 
             // FilterGroupBox
             // 
-            this.FilterGroupBox.Controls.Add(this.MyFunctionChart);
             this.FilterGroupBox.Controls.Add(this.ContrastSecondDelta);
             this.FilterGroupBox.Controls.Add(this.ContrastFirstDelta);
             this.FilterGroupBox.Controls.Add(this.GammaCoefficient);
@@ -542,6 +521,9 @@
             this.MyFunctionPicture.TabIndex = 6;
             this.MyFunctionPicture.TabStop = false;
             this.MyFunctionPicture.Paint += new System.Windows.Forms.PaintEventHandler(this.MyFunctionPicture_Paint);
+            this.MyFunctionPicture.MouseDown += new System.Windows.Forms.MouseEventHandler(this.MyFunctionPicture_MouseDown);
+            this.MyFunctionPicture.MouseMove += new System.Windows.Forms.MouseEventHandler(this.MyFunctionPicture_MouseMove);
+            this.MyFunctionPicture.MouseUp += new System.Windows.Forms.MouseEventHandler(this.MyFunctionPicture_MouseUp);
             // 
             // label1
             // 
@@ -598,7 +580,6 @@
             ((System.ComponentModel.ISupportInitialize)(this.RChart)).EndInit();
             this.MenuPanel.ResumeLayout(false);
             this.MenuPanel.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.MyFunctionChart)).EndInit();
             this.FilterGroupBox.ResumeLayout(false);
             this.FilterGroupBox.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.ContrastSecondDelta)).EndInit();
@@ -644,7 +625,6 @@
         private System.Windows.Forms.RadioButton BrightnessRadio;
         private System.Windows.Forms.RadioButton NegationRadio;
         private System.Windows.Forms.RadioButton NoFilterRadio;
-        private System.Windows.Forms.DataVisualization.Charting.Chart MyFunctionChart;
         private System.Windows.Forms.NumericUpDown BrigthnessDelta;
         public System.Windows.Forms.NumericUpDown GammaCoefficient;
         private System.Windows.Forms.NumericUpDown ContrastSecondDelta;
