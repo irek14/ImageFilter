@@ -161,5 +161,75 @@ namespace ImageFilter
         {
             Application.Exit();
         }
+
+        private void createToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            IsAlreadyChange = new bool[Image.Width, Image.Height];
+            CreateHSV();
+
+            Image.Invalidate();
+        }
+
+        private void CreateHSV()
+        {
+            ImageBitmap = new Bitmap(Image.Width, Image.Height);
+            for (int i=0; i<Image.Width; i++)
+            {
+                for(int j=0; j<Image.Height; j++)
+                {
+                    if(i<30 || j<30 || i>Image.Width-30 || j>Image.Height-30)
+                    {
+                        newPhoto[i, j] = Color.Black;
+                    }
+                    else
+                    {
+                        newPhoto[i, j] = Color.White;
+                    }
+                }
+            }
+
+            Point middle = new Point(Image.Width / 2, Image.Height / 2);
+
+            double r = (Image.Width - 80) / 2;
+            if(r > 256)
+            {
+                r = 256;
+            }
+
+            for(int i=0; i<256; i++)
+            {
+                for(int j=0; j<256; j++)
+                {
+                    for(int k=0; k<256; k++)
+                    {                        
+                        Color color = Color.FromArgb(255, i, j, k);
+                        ColorToHSV(color, out double hue,out double saturation,out double value);
+
+                        double x = Math.Cos(hue) * saturation;
+                        x *= r;
+                        double y = Math.Sin(hue) * saturation;
+                        y *= r;
+
+                        newPhoto[(int)x + middle.X, (int)y + middle.Y] = color;
+                    }
+                }
+            }
+        }
+
+        public static void ColorToHSV(Color color, out double hue, out double saturation, out double value)
+        {
+            int max = Math.Max(color.R, Math.Max(color.G, color.B));
+            int min = Math.Min(color.R, Math.Min(color.G, color.B));
+
+            hue = (color.GetHue()-90) * Math.PI / 180.0;
+            saturation = (max == 0) ? 0 : 1d - (1d * min / max);
+            value = max / 255d;
+        }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            IsAlreadyChange = new bool[Image.Width, Image.Height];
+            InitializeImage();
+        }
     }
 }
